@@ -1,0 +1,1 @@
+FiveM-seat_seater
