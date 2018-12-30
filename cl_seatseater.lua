@@ -6,10 +6,10 @@ local doors = {
   {"seat_pside_r", 2}
 }
 
-function VehicleInFront()
-    local pos = GetEntityCoords(GetPlayerPed(-1))
-    local entityWorld = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 5.0, 0.0)
-    local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, GetPlayerPed(-1), 0)
+function VehicleInFront(ped)
+    local pos = GetEntityCoords(ped)
+    local entityWorld = GetOffsetFromEntityInWorldCoords(ped, 0.0, 5.0, 0.0)
+    local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, ped, 0)
     local _, _, _, _, result = GetRaycastResult(rayHandle)
     return result
 end
@@ -17,11 +17,12 @@ end
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-    if IsControlJustReleased(0, 23) and running ~= true and GetVehiclePedIsIn(GetPlayerPed(-1), false) == 0 then
-      local vehicle = VehicleInFront()
+	local ped = GetPlayerPed(-1)
+    if IsControlJustReleased(0, 23) and running ~= true and GetVehiclePedIsIn(ped, false) == 0 then
+      local vehicle = VehicleInFront(ped)
       running = true
       if vehicle ~= nil then
-        local plyCoords = GetEntityCoords(GetPlayerPed(-1), false)
+        local plyCoords = GetEntityCoords(ped, false)
         local doorDistances = {}
         for k, door in pairs(doors) do
           local doorBone = GetEntityBoneIndexByName(vehicle, door[1])
@@ -35,7 +36,7 @@ Citizen.CreateThread(function()
             key, min = k, v
           end
         end
-        TaskEnterVehicle(GetPlayerPed(-1), vehicle, -1, doors[key][2], 1.5, 1, 0)
+        TaskEnterVehicle(ped, vehicle, -1, doors[key][2], 1.5, 1, 0)
       end
       running = false
     end
