@@ -37,7 +37,6 @@ Citizen.CreateThread(function()
             key, min = k, v
           end
         end
-        print("FOOUND CLOEST SEAT " .. doors[key][1] .. " ID: " .. doors[key][2])
         TaskEnterVehicle(GetPlayerPed(-1), vehicle, -1, doors[key][2], 1.5, 1, 0)
       end
       running = false
