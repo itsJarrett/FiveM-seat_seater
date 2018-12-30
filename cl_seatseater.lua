@@ -17,9 +17,7 @@ end
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-    DisableControlAction(22, 135, true)
-    DisablePlayerVehicleRewards(PlayerId())
-    if IsControlJustReleased(0, 23) and GetLastInputMethod( 2 ) and running ~= true and GetVehiclePedIsIn(GetPlayerPed(-1), false) == 0 then
+    if IsControlJustReleased(0, 23) and running ~= true and GetVehiclePedIsIn(GetPlayerPed(-1), false) == 0 then
       local vehicle = VehicleInFront()
       running = true
       if vehicle ~= nil then
