@@ -9,7 +9,7 @@ local doors = {
 function VehicleInFront()
     local pos = GetEntityCoords(GetPlayerPed(-1))
     local entityWorld = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 5.0, 0.0)
-    local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, GetPlayerPed(-1), 0)
+    local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 5, GetPlayerPed(-1), 0)
     local _, _, _, _, result = GetRaycastResult(rayHandle)
     return result
 end
@@ -17,6 +17,7 @@ end
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
+    DisablePlayerVehicleRewards(PlayerId())
     if IsControlJustReleased(0, 23) and running ~= true and GetVehiclePedIsIn(GetPlayerPed(-1), false) == 0 then
       local vehicle = VehicleInFront()
       running = true
@@ -35,7 +36,8 @@ Citizen.CreateThread(function()
             key, min = k, v
           end
         end
-        TaskEnterVehicle(GetPlayerPed(-1), vehicle, -1, doors[key][2], 1.5, 1, 0)
+        print("FOOUND CLOEST SEAT " .. doors[key][1] .. " ID: " .. doors[key][2])
+        TaskEnterVehicle(GetPlayerPed(-1), vehicle, -1, doors[key][2], 1.0, 1, 0)
       end
       running = false
     end
