@@ -1,4 +1,3 @@
-
 local doors = {
   {"seat_dside_f", -1},
   {"seat_pside_f", 0},
