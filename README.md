@@ -1,4 +1,6 @@
-FiveM-seat_seater
+## FiveM-seat_seater
+
+## License
 
 A FiveM Resource that allows users to enter the vehicle seat they are near.
 Copyright © 2018 Jarrett Boice
