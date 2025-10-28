@@ -5,25 +5,14 @@ local doors = {
 	{"seat_pside_r", 2}
 }
 
-function VehicleInFront(ped)
-    local pos = GetEntityCoords(ped)
-    local entityWorld = GetOffsetFromEntityInWorldCoords(ped, 0.0, 5.0, 0.0)
-    local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, ped, 0)
-    local _, _, _, _, result = GetRaycastResult(rayHandle)
-	
-    return result
-end
-
 Citizen.CreateThread(function()
 	while true do
-    	Citizen.Wait(0)
+    	Citizen.Wait(23)
 			
 		local ped = PlayerPedId()
 			
-   		if IsControlJustReleased(0, 23) and running ~= true and GetVehiclePedIsIn(ped, false) == 0 then
-      		local vehicle = VehicleInFront(ped)
-				
-      		running = true
+   		if IsControlJustReleased(0, 23) and GetVehiclePedIsIn(ped, false) == 0 then
+      		local vehicle = GetVehiclePedIsEntering(ped)
 				
       		if vehicle ~= nil then
 				local plyCoords = GetEntityCoords(ped, false)
